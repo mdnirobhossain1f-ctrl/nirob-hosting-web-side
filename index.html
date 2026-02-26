@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="bn">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NIROB FF LIKES — টার্বো সংস্করণ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&amp;family=Rajdhani:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+        /* আপনার অরিজিনাল ডিজাইনগুলো সব ঠিক রাখা হয়েছে */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { min-height: 100vh; background: #03050a; font-family: 'Rajdhani', sans-serif; display: flex; align-items: center; justify-content: center; padding: 1.5rem; position: relative; overflow-x: hidden; }
+        .rain { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: repeating-linear-gradient(0deg, rgba(0,255,255,0.03) 0px, rgba(0,255,255,0.03) 2px, transparent 2px, transparent 8px); pointer-events: none; animation: rain 20s linear infinite; z-index: 0; }
+        .container { width: 100%; max-width: 600px; position: relative; z-index: 10; }
+        .cyber-card { background: rgba(0, 10, 20, 0.85); backdrop-filter: blur(12px); border: 2px solid #0ff; border-radius: 2rem; padding: 2.5rem 2rem; box-shadow: 0 0 30px #0ff; position: relative; }
+        h1 { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; text-align: center; color: #0ff; text-shadow: 0 0 10px #0ff; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .form-group { margin-bottom: 1.8rem; }
+        label { display: flex; align-items: center; gap: 0.5rem; font-family: 'Orbitron'; font-size: 0.9rem; color: #0ff; margin-bottom: 0.5rem; }
+        input, select { width: 100%; padding: 1.1rem; background: #030a12; border: 2px solid #0ff; border-radius: 1.8rem; color: #fff; outline: none; }
+        .btn-primary { width: 100%; padding: 1.2rem; background: linear-gradient(145deg, #0ff, #f0f); border: none; border-radius: 3rem; font-family: 'Orbitron'; font-weight: 700; font-size: 1.3rem; color: #000; cursor: pointer; box-shadow: 0 0 30px #0ff; transition: 0.3s; }
+        .progress-bar { width: 0%; height: 4px; background: linear-gradient(90deg, #0ff, #f0f); margin-top: 1rem; transition: width 0.3s; }
+        
+        /* আপনার কাঙ্ক্ষিত রিপোর্ট মেনু/কার্ড */
+        .result-card { margin-top: 2rem; background: #030a12dd; border: 2px solid #0ff; border-radius: 2rem; padding: 1.5rem; display: none; transition: 0.5s; }
+        .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .result-item { background: rgba(0, 0, 0, 0.5); padding: 1rem; border-left: 4px solid #0ff; border-radius: 10px; }
+        .result-label { font-size: 0.75rem; color: #aaa; display: block; }
+        .result-value { font-size: 1.1rem; font-weight: 700; color: #0ff; }
+        .status-success { color: #4ade80; }
+        .status-failed { color: #f87171; }
+  </style>
+ </head>
+ <body>
+  <div class="rain"></div>
+  <div class="container">
+   <div class="cyber-card">
+    <h1><i class="fas fa-bolt"></i> NIROB FF LIKES</h1>
+    <form id="likeForm">
+     <div class="form-group">
+      <label><i class="fas fa-id-card"></i> TARGET UID</label>
+      <input type="text" id="uidInput" placeholder="UID দিন (যেমন: 14670163305)" required>
+     </div>
+     <div class="form-group">
+      <label><i class="fas fa-globe"></i> সার্ভার জোন</label>
+      <select id="serverSelect">
+        <option value="BD">Bangladesh (BD)</option>
+        <option value="IND">India (IND)</option>
+        <option value="BR">Brazil (BR)</option>
+        <option value="US">USA (US)</option>
+      </select>
+     </div>
+     <button type="submit" class="btn-primary" id="likeBtn"><i class="fas fa-rocket"></i> Send Like 😈</button>
+     <div class="progress-bar" id="progressBar"></div>
+    </form>
+
+    <div class="result-card" id="resultCard">
+     <div style="color: #0ff; font-family: 'Orbitron'; margin-bottom: 1rem;"><i class="fas fa-file-invoice"></i> মিশন রিপোর্ট:</div>
+     <div class="result-grid">
+      <div class="result-item"><span class="result-label">নিকনেম</span><span class="result-value" id="nickname">...</span></div>
+      <div class="result-item"><span class="result-label">UID</span><span class="result-value" id="resUid">...</span></div>
+      <div class="result-item"><span class="result-label">পূর্ব লাইক</span><span class="result-value" id="before">...</span></div>
+      <div class="result-item"><span class="result-label">বর্তমান লাইক</span><span class="result-value" id="after">...</span></div>
+      <div class="result-item"><span class="result-label">লাইক পেয়েছে</span><span class="result-value" id="given">...</span></div>
+      <div class="result-item"><span class="result-label">স্ট্যাটাস</span><span class="result-value" id="status">...</span></div>
+     </div>
+    </div>
+   </div>
+  </div>
+
+  <script>
+    document.getElementById('likeForm').onsubmit = async function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('likeBtn');
+        const progressBar = document.getElementById('progressBar');
+        const reportMenu = document.getElementById('resultCard');
+        
+        const uid = document.getElementById('uidInput').value;
+        const server = document.getElementById('serverSelect').value;
+
+        // প্রিপারেশন
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> প্রসেসিং...';
+        progressBar.style.width = '30%';
+
+        try {
+            // মাহিরের API লিংকে আপনার দেওয়া প্যারামিটার বসানো হলো
+            const apiUrl = `https://mahir-like-web.vercel.app/like?uid=${uid}&server_name=${server}`;
+            
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+
+            // এপিআই থেকে উত্তর আসার সাথে সাথে মেনু দেখাবে
+            reportMenu.style.display = 'block';
+            progressBar.style.width = '100%';
+
+            // এপিআই-এর ডাটাগুলো মেনুতে বসানো (যেমনটা মাহিরের সাইটে থাকে)
+            document.getElementById('nickname').innerText = data.Nickname || "N/A";
+            document.getElementById('resUid').innerText = data.UID || uid;
+            document.getElementById('before').innerText = data.Before || "0";
+            document.getElementById('after').innerText = data.After || "0";
+            document.getElementById('given').innerText = data.Given || "0";
+
+            const statusEl = document.getElementById('status');
+            if(data.Status == 1 || data.Status == "Success") {
+                statusEl.innerHTML = '<span class="status-success">সফল ✅</span>';
+            } else {
+                statusEl.innerHTML = '<span class="status-failed">ব্যর্থ ❌</span>';
+            }
+
+        } catch (error) {
+            // এরর হলেও মেনু দেখাবে কিন্তু স্ট্যাটাসে "Server Error" বলবে
+            reportMenu.style.display = 'block';
+            document.getElementById('status').innerHTML = '<span class="status-failed">Server Error!</span>';
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-rocket"></i> Send Like 😈';
+        }
+    };
+  </script>
+ </body>
+</html>
