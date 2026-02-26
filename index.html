@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="bn">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NIROB FF LIKES — টার্বো সংস্করণ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&amp;family=Rajdhani:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { min-height: 100vh; background: #03050a; font-family: 'Rajdhani', sans-serif; display: flex; align-items: center; justify-content: center; padding: 1.5rem; position: relative; overflow-x: hidden; }
+        .rain { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: repeating-linear-gradient(0deg, rgba(0,255,255,0.03) 0px, rgba(0,255,255,0.03) 2px, transparent 2px, transparent 8px); pointer-events: none; animation: rain 20s linear infinite; z-index: 0; }
+        @keyframes rain { 0% { transform: translateY(0); } 100% { transform: translateY(50px); } }
+        .particle { position: absolute; width: 2px; height: 2px; background: #0ff; border-radius: 50%; box-shadow: 0 0 15px #0ff, 0 0 30px #f0f; opacity: 0.6; animation: floatParticle 15s infinite linear; }
+        @keyframes floatParticle { 0% { transform: translateY(100vh) translateX(0); opacity: 0; } 100% { transform: translateY(-100px) translateX(50px); opacity: 0; } }
+        .container { width: 100%; max-width: 600px; position: relative; z-index: 10; animation: glitchAppear 1s ease-out; }
+        @keyframes glitchAppear { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
+        .cyber-card { background: rgba(0, 10, 20, 0.85); backdrop-filter: blur(12px); border: 2px solid #0ff; border-radius: 2rem; padding: 2.5rem 2rem; box-shadow: 0 0 30px #0ff, inset 0 0 20px #0ff33; position: relative; }
+        h1 { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; font-weight: 900; text-align: center; margin-bottom: 1.5rem; color: #0ff; text-shadow: 0 0 10px #0ff, 0 0 20px #f0f; display: flex; align-items: center; justify-content: center; gap: 0.5rem; letter-spacing: 2px; }
+        .form-group { margin-bottom: 1.8rem; }
+        label { display: flex; align-items: center; gap: 0.5rem; font-family: 'Orbitron', sans-serif; font-weight: 600; font-size: 0.9rem; text-transform: uppercase; color: #0ff; margin-bottom: 0.5rem; }
+        input, select { width: 100%; padding: 1.1rem 1.4rem; background: #030a12; border: 2px solid #0ff; border-radius: 1.8rem; font-size: 1rem; font-family: 'Rajdhani', sans-serif; color: #f0f4fa; outline: none; transition: 0.3s; }
+        input:focus { border-color: #f0f; box-shadow: 0 0 15px #f0f; }
+        .btn-primary { width: 100%; padding: 1.2rem; background: linear-gradient(145deg, #0ff, #f0f); border: none; border-radius: 3rem; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1.3rem; color: #03050a; text-transform: uppercase; letter-spacing: 2px; display: flex; align-items: center; justify-content: center; gap: 0.75rem; cursor: pointer; transition: 0.3s; box-shadow: 0 0 30px #0ff; margin-top: 1rem; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 0 40px #f0f; }
+        .progress-bar { width: 0%; height: 4px; background: linear-gradient(90deg, #0ff, #f0f); border-radius: 2px; margin-top: 0.8rem; transition: width 0.3s; }
+        .result-card { margin-top: 2.5rem; background: #030a12dd; border: 2px solid #0ff; border-radius: 2rem; padding: 1.8rem; box-shadow: 0 0 30px #0ff66; display: none; animation: slideUp 0.6s ease-out; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .result-item { background: rgba(0, 0, 0, 0.5); border-radius: 1.2rem; padding: 1rem; border-left: 4px solid #0ff; }
+        .result-label { display: block; font-size: 0.75rem; text-transform: uppercase; color: #aaa; margin-bottom: 0.3rem; }
+        .result-value { font-size: 1.1rem; font-weight: 700; color: #0ff; word-break: break-all; }
+        .status-success { color: #4ade80; text-shadow: 0 0 8px #4ade80; }
+        .status-failed { color: #f87171; text-shadow: 0 0 8px #f87171; }
+        .social-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: 2rem; }
+        .social-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1.5rem; border-radius: 2rem; text-decoration: none; color: #000; background: #0ff; font-weight: 600; font-size: 0.9rem; transition: 0.3s; }
+        .social-btn:hover { transform: scale(1.05); box-shadow: 0 0 20px #f0f; }
+    </style>
+ </head>
+ <body>
+  <div class="rain"></div>
+  <div id="particles"></div>
+  <div class="container">
+   <div class="cyber-card">
+    <h1><i class="fas fa-bolt"></i> NIROB FF LIKES</h1>
+    <form id="likeForm">
+     <div class="form-group">
+      <label><i class="fas fa-id-card"></i> TARGET UID</label>
+      <input type="text" name="uid" id="userInputUid" placeholder="এখানে UID দিন..." required>
+     </div>
+     <div class="form-group">
+      <label><i class="fas fa-globe"></i> সার্ভার জোন</label>
+      <select name="server_name" id="userServer">
+        <option value="BD">🇧🇩 BD (বাংলাদেশ)</option>
+        <option value="IND">🇮🇳 IND (ইন্ডিয়া)</option>
+        <option value="BR">🇧🇷 BR (ব্রাজিল)</option>
+        <option value="US">🇺🇸 US (ইউএসএ)</option>
+      </select>
+     </div>
+     <button type="submit" class="btn-primary" id="likeBtn"><i class="fas fa-rocket"></i> Send Like 😈</button>
+     <div class="progress-bar" id="progressBar"></div>
+    </form>
+
+    <div class="result-card" id="result">
+     <div style="color: #0ff; font-family: 'Orbitron'; margin-bottom: 1rem;"><i class="fas fa-file-alt"></i> মিশন রিপোর্ট:</div>
+     <div class="result-grid">
+      <div class="result-item"><span class="result-label">নিকনেম</span><span class="result-value" id="resNickname">...</span></div>
+      <div class="result-item"><span class="result-label">UID</span><span class="result-value" id="resUid">...</span></div>
+      <div class="result-item"><span class="result-label">বর্তমান লাইক</span><span class="result-value" id="resAfter">...</span></div>
+      <div class="result-item"><span class="result-label">স্ট্যাটাস</span><span class="result-value" id="resStatus">...</span></div>
+     </div>
+    </div>
+
+    <div class="social-buttons">
+      <a href="https://youtube.com/@MAHIR__222" target="_blank" class="social-btn"><i class="fab fa-youtube"></i> YouTube</a>
+      <a href="https://t.me/MAHIR0208" target="_blank" class="social-btn"><i class="fab fa-telegram-plane"></i> Telegram</a>
+    </div>
+   </div>
+  </div>
+
+  <script>
+    // পার্টিকেল এনিমেশন
+    function createParticles() {
+        const particlesDiv = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            particlesDiv.appendChild(particle);
+        }
+    }
+    createParticles();
+
+    // মেইন লাইক ফাংশন
+    document.getElementById('likeForm').onsubmit = async function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('likeBtn');
+        const progressBar = document.getElementById('progressBar');
+        const resultCard = document.getElementById('result');
+        
+        const uid = document.getElementById('userInputUid').value;
+        const server = document.getElementById('userServer').value;
+
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        progressBar.style.width = '30%';
+
+        try {
+            // আপনার দেওয়া সঠিক এপিআই লিংক
+            const apiUrl = `https://mahir-like-web.vercel.app/like?uid=${uid}&server_name=${server}`;
+            
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+            
+            progressBar.style.width = '100%';
+            resultCard.style.display = 'block';
+
+            // রেজাল্ট মেনুতে ডাটা বসানো
+            document.getElementById('resNickname').textContent = data.Nickname || "N/A";
+            document.getElementById('resUid').textContent = data.UID || uid;
+            document.getElementById('resAfter').textContent = data.After || "0";
+            
+            const statusEl = document.getElementById('resStatus');
+            if(data.Status == 1 || data.Status == "Success") {
+                statusEl.innerHTML = '<i class="fas fa-check-circle"></i> সফল';
+                statusEl.className = "result-value status-success";
+            } else {
+                statusEl.innerHTML = '<i class="fas fa-times-circle"></i> ব্যর্থ';
+                statusEl.className = "result-value status-failed";
+            }
+
+        } catch (error) {
+            alert("API থেকে কোনো উত্তর পাওয়া যাচ্ছে না। আপনার ইন্টারনেট কানেকশন চেক করুন।");
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-rocket"></i> Send Like 😈';
+            setTimeout(() => progressBar.style.width = '0%', 2000);
+        }
+    };
+  </script>
+ </body>
+</html>
